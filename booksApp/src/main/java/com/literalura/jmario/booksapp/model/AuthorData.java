@@ -2,7 +2,6 @@ package com.literalura.jmario.booksapp.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 @Table(name = "authors")
@@ -16,8 +15,11 @@ public class AuthorData {
     private Integer birth_year;
     private Integer death_year;
 
-    @OneToOne(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "book_id")
     private BookClass book;
+
+    public AuthorData(){};
 
     public AuthorData(AuthorDataRecord author) {
         this.author_name = author.author_name();
@@ -63,16 +65,15 @@ public class AuthorData {
     }
 
     public void setBooks(BookClass book) {
-        book.setAuthor(this);
         this.book = book;
     }
 
     @Override
     public String toString() {
-        return "AuthorData{" +
-                "death_year=" + death_year +
-                ", birth_year=" + birth_year +
-                ", author_name='" + author_name + '\'' +
-                '}';
+        return
+                """
+                    \n\tAUTHOR NAME: %S
+                    \tBIRTH: %d
+                    \tDEAD: %d""".formatted(author_name,birth_year,death_year);
     }
 }

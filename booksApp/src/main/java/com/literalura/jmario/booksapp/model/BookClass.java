@@ -21,8 +21,7 @@ public class BookClass {
 
     private Integer download_count;
 
-    @OneToOne
-    @JoinColumn(name = "author_id")
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private AuthorData author;
 
     public BookClass(){}
@@ -79,16 +78,19 @@ public class BookClass {
     }
 
     public void setAuthor(AuthorData author) {
-       this.author = author;
+        author.setBooks(this);
+        this.author = author;
     }
 
     @Override
     public String toString() {
-        return "BookClass{" +
-                "title='" + title + '\'' +
-                ", languages=" + languages +
-                ", download_count=" + download_count +
-                ", author=" + author +
-                '}';
+        return
+                """
+                \n# TITLE: %S
+                LANGUAGE: %S
+                DOWNLOAD COUNTER: %d
+                AUTHOR: %S
+                """.formatted(title,languages,download_count,author);
+
     }
 }

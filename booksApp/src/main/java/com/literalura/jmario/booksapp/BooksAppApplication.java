@@ -15,7 +15,7 @@ public class BooksAppApplication implements CommandLineRunner {
 	BooksRepository repository ;
 
 	public static void main(String[] args) {
-		SpringApplication.t run(BooksAppApplication.class, args);
+		SpringApplication.run(BooksAppApplication.class, args);
 	}
 
 	@Override
